@@ -27,6 +27,36 @@
     <body ng-app="GardenApp">
         <div ng-controller="gardenCtrl as $ctrl">
             
+            <div class="row">
+                <div class="col-xs-12 col-md-offset-4 col-md-4">
+                    <!--day summary-->
+                    <div>
+                        <p>Hoy:</p>
+                        <h3>{{$ctrl.today.summary}}</h3>
+                    </div>
+                    <!--setted city-->
+                    <div>
+                        <p>en {{$ctrl.setted.cityName}}</p>
+                    </div>
+                    <!--setted water hour-->
+                    <div>
+                        <p>Hora de riego:</p>
+                        <h4>{{$ctrl.setted.waterHourString}}</h4>
+                    </div>
+                    
+                    <!--reminder msg TEST-->
+                    <div>
+                        <h4><small>{{$ctrl.today.reminderMsg}}</small></h4>
+                    </div>
+                    
+                    <!--water button-->
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info">Ya regué!</button>
+                    </span>
+                    
+                </div>
+            </div>
+            
         </div>
     </body>
 </html>
