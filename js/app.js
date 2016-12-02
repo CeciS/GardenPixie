@@ -1,22 +1,9 @@
-/* global angular */
+/* global angular, alert */
 angular.module('GardenApp', [])
-.controller('gardenCtrl', [ '$scope', '$http', function ($scope, $http) {
-  // TASKS:
-  // get location
-  // set location
-  // check if water time
-  // launch reminder
-  // if not DONE re launch reminder
-  // display UI data
-  // set water time
-
-  // DONE
-  // get forecast
-  // get reminder message
-
+.controller('gardenCtrl', [ '$scope', '$http', '$filter', function ($scope, $http, $filter) {
   var $ctrl = this
   var forecast = ''
-  // var currentTime = new Date()
+  var apiKey = '4874c7d1304dee63c10ffb045c76da1b'
 
   $ctrl.today = {
     summary: '',
@@ -24,15 +11,15 @@ angular.module('GardenApp', [])
     reminderMsg: ''
   }
   $ctrl.setted = {
-    cityName: 'Apóstoles, Misiones',
-    currentLocation: '-27.9218,-55.7542',
+    cityName: '',
+    currentLocation: '',
     waterHourString: '',
     waterHour: ''
   }
 
   // gets weather data and saves current day summary and precipitation Probability
-  var getForecast = function (location, callback) {
-    $http.jsonp('https://api.darksky.net/forecast/4874c7d1304dee63c10ffb045c76da1b/' + location + '?&lang=es&units=si&callback=JSON_CALLBACK')
+  var getForecast = function (key, location, callback) {
+    $http.jsonp('https://api.darksky.net/forecast/' + key + '/' + location + '?&lang=es&units=si&callback=JSON_CALLBACK')
       .then(function (response) {
         forecast = response.data
 
@@ -40,13 +27,28 @@ angular.module('GardenApp', [])
         $ctrl.today.precipProbability = forecast.daily.data[0].precipProbability
 
         console.log('forecast', forecast)
-
-        callback()
+        getReminderMessage()
+        typeof callback === 'function' && callback(forecast)
       }, function (response) {
         console.log('Algo salio mal. Status: ', response.status, 'statusText: ', response.statusText)
       })
   }
 
+  var setWaterHourOnSunset = function (currentForecast) {
+    $ctrl.setted.waterHour = new Date(currentForecast.daily.data[0].sunsetTime * 1000)
+    $ctrl.setted.waterHourString = $filter('date')($ctrl.setted.waterHour, 'HH:mm')
+    timeUntilHour($ctrl.setted.waterHour)
+  }
+
+  var getCurrentLocation = function (callback) {
+    // TODO detectar localizacion
+    $ctrl.setted.cityName = 'Apóstoles, Misiones'
+    $ctrl.setted.currentLocation = '-27.9218,-55.7542'
+
+    callback(apiKey, $ctrl.setted.currentLocation, setWaterHourOnSunset)
+  }
+
+  // funciones de recordatorio
   var getReminderMessage = function () {
     if ($ctrl.today.precipProbability === 0) {
       $ctrl.today.reminderMsg = 'No te olvides de regar las plantas'
@@ -55,11 +57,25 @@ angular.module('GardenApp', [])
     }
   }
 
-  var setWaterHourOnSunset = function (currentForecast) {
-    $ctrl.setted.waterHour = new Date(currentForecast.daily.data[0].sunsetTime * 1000)
-    $ctrl.setted.waterHourString = $ctrl.setted.waterHour.getHours() + ':' + $ctrl.setted.waterHour.getMinutes()
+  var setReminderTimer = function (millisecondsUntilHour) {
+    setTimeout(function () {
+      alert($ctrl.today.reminderMsg)
+    }, millisecondsUntilHour)
   }
 
-  // init
-  getForecast($ctrl.setted.currentLocation, getReminderMessage)
+  var timeUntilHour = function (hour) {
+    var currentTime = new Date()
+    var millisecondsUntilHour = hour - currentTime
+    console.log('millisecondsUntilHour', millisecondsUntilHour)
+    setReminderTimer(millisecondsUntilHour)
+  }
+
+  // first init
+
+  // get location
+  // set coordinates
+  // call get forecast
+  // setWaterHourOnSunset
+
+  getCurrentLocation(getForecast)
 }])
