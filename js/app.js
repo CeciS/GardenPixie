@@ -26,7 +26,6 @@ angular.module('GardenApp', [])
         $ctrl.today.summary = forecast.daily.data[0].summary
         $ctrl.today.precipProbability = forecast.daily.data[0].precipProbability
 
-        console.log('forecast', forecast)
         getReminderMessage()
         typeof callback === 'function' && callback(forecast)
       }, function (response) {
@@ -66,7 +65,6 @@ angular.module('GardenApp', [])
   var timeUntilHour = function (hour) {
     var currentTime = new Date()
     var millisecondsUntilHour = hour - currentTime
-    console.log('millisecondsUntilHour', millisecondsUntilHour)
     setReminderTimer(millisecondsUntilHour)
   }
 
