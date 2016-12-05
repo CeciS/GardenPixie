@@ -1,0 +1,25 @@
+@main-color: #9ddcdc;
+@accent-color: #E67A7A;
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.topbar{
+    background-color: @main-color;
+    color: white;
+    padding-top: 0.3em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+.gp-label{
+    color: darken(@main-color, 20%);
+}
+
+a{
+    color: @accent-color;
+    &:hover, &:focus{
+        color: darken(@accent-color, 20%);
+    }
+}

@@ -8,6 +8,8 @@
         <title>Garden</title>
         <base href="/">
 
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+
         <!-- Bootstrap CSS -->
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
         
@@ -17,6 +19,9 @@
         <!--Custom JS-->
         <script src="/js/app.js"></script>
 
+        <!--Custom CSS-->
+        <link href="/css/style.css"rel="stylesheet">
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -25,14 +30,17 @@
         <![endif]-->
     </head>
     <body ng-app="GardenApp">
-        <div ng-controller="gardenCtrl as $ctrl">
+        <div class="topbar text-center">
+            <h2>GardenPixie</h2>
+        </div>
+        <div class="container" ng-controller="gardenCtrl as $ctrl">
             
             <div class="row">
                 <div class="col-xs-12 col-md-offset-4 col-md-4">
                     <!--day summary-->
                     <div>
-                        <p>Hoy:</p>
-                        <h3>{{$ctrl.today.summary}}</h3>
+                        <p class="gp-label text-uppercase"><strong>Pronostico del dia:</strong></p>
+                        <h2 class="text-center">{{$ctrl.today.summary}}</h2>
                     </div>
                     <!--setted city-->
                     <div>
@@ -40,20 +48,22 @@
                     </div>
                     <!--setted water hour-->
                     <div>
-                        <p>Hora de riego:</p>
-                        <h4>{{$ctrl.setted.waterHourString}}</h4>
+                        <p class="gp-label text-uppercase"><strong>Hora de riego:</strong></p>
+                        <h2 class="text-center">{{$ctrl.setted.waterHourString}}</h2>
                     </div>
                     
-                    <!--reminder msg TEST-->
-                    <div>
-                        <h4><small>{{$ctrl.today.reminderMsg}}</small></h4>
-                    </div>
-                    
-                    <!--water button-->
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-info">Ya regué!</button>
-                    </span>
-                    
+                    <hr>
+
+                    <footer>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <span><a href="https://github.com/CeciS" target="_blank">Cecilia Schiebel</a></span>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="push-right"><a href="https://darksky.net/poweredby/" target="_blank">Powered by Dark Sky</a></span>
+                            </div>
+                        </div>
+                    </footer>                   
                 </div>
             </div>
             

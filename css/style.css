@@ -1,0 +1,23 @@
+/*!
+ * GardenApp
+ */
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+.topbar {
+  background-color: #9ddcdc;
+  color: white;
+  padding-top: 0.3em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+.gp-label {
+  color: #52c1c1;
+}
+a {
+  color: #E67A7A;
+}
+a:hover,
+a:focus {
+  color: #d22828;
+}
