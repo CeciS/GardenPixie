@@ -1,9 +1,8 @@
-/* global angular, alert */
+/* global angular, alert, apiKey, currentLocation, cityName */
 angular.module('GardenApp', [])
 .controller('gardenCtrl', [ '$scope', '$http', '$filter', function ($scope, $http, $filter) {
   var $ctrl = this
   var forecast = ''
-  var apiKey = '4874c7d1304dee63c10ffb045c76da1b'
 
   $ctrl.today = {
     summary: '',
@@ -41,8 +40,8 @@ angular.module('GardenApp', [])
 
   var getCurrentLocation = function (callback) {
     // TODO detectar localizacion
-    $ctrl.setted.cityName = 'Apóstoles, Misiones'
-    $ctrl.setted.currentLocation = '-27.9218,-55.7542'
+    $ctrl.setted.cityName = cityName
+    $ctrl.setted.currentLocation = currentLocation
 
     callback(apiKey, $ctrl.setted.currentLocation, setWaterHourOnSunset)
   }
